@@ -10,14 +10,14 @@
 </head>
 <body>
 <div class="m-3">
-    <div class="img-center">
-    <h1>Astronomy Picture of the Day</h1>
+    <div class="center">
+    <h1 >Astronomy Picture of the Day</h1>
     <label for="datesCheckbox">Date range</label>
     <input type="checkbox" id="datesCheckbox" onchange="stateChanged()">
 
-    <input type="date" hidden id="startDate">
-    <input type="date" hidden id="endDate">
-    <input type="date" id="date">
+    <input type="date" hidden id="startDate"  onchange="stateChanged()">
+    <input type="date" hidden id="endDate"  onchange="stateChanged()">
+    <input type="date" id="date"  onchange="stateChanged()">
     <button class="btn btn-blue" onclick="getLinkToImage()">Search</button>
     <div id="navigation" hidden>
         <img src="prev.svg" class="control-icon" onclick="prevClick()">
@@ -38,7 +38,7 @@
 
 <script>
 
-    window.onload = getLinkToImage;
+    window.onload = onLoad;
     let APODS = [];
     let currentIndex = 0;
 
@@ -83,6 +83,10 @@
         let date = document.getElementById('date');
         let dateStart = document.getElementById('startDate');
         let dateEnd = document.getElementById('endDate');
+        localStorage.setItem("Range",checkbox.checked);
+        localStorage.setItem("Date",date.value)
+        localStorage.setItem("StartDate",dateStart.value);
+        localStorage.setItem("EndDate",dateEnd.value)
         if (checkbox.checked) {
             date.setAttribute('hidden', '');
             dateStart.removeAttribute('hidden');
@@ -93,6 +97,22 @@
             dateEnd.setAttribute('hidden', '');
 
         }
+
+    }
+
+    function onLoad()
+    {
+        let checkbox = document.getElementById('datesCheckbox');
+        range = localStorage.getItem("Range");
+        checkbox.checked = range == "true";
+        document.getElementById('date').value =   localStorage.getItem("Date");
+        document.getElementById('startDate').value =localStorage.getItem("StartDate");
+        document.getElementById('endDate').value = localStorage.getItem("EndDate");
+        console.log(document.getElementById('date').value);
+        console.log(document.getElementById('startDate').value);
+        console.log(document.getElementById('endDate').value)
+        stateChanged()
+        getLinkToImage()
 
     }
 
