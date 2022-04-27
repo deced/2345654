@@ -1,0 +1,76 @@
+
+.form-control {
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid #ced4da;
+    padding: 4px;
+    display: block;
+    margin-top: 10px;
+    resize: none;
+    width: 100%;
+}
+.m-3{
+    margin: 3%;
+}
+.form-control:focus {
+    outline: none !important;
+    border: 2px solid #719ECE;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.m-2
+{
+    margin: 2%;
+}
+h1{
+    font-family: 'Radio Canada', sans-serif;
+    font-weight: 700;
+}
+p{
+    font-family: 'Radio Canada', sans-serif;
+}
+.btn {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: 1000;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.btn-blue
+{
+    background: cornflowerblue;
+    color: white;
+}
+
+.btn-yellow:hover {
+    background: linear-gradient(#ffc222, orange) gold;
+}
+
+iframe{
+    width: 1100px;
+    height: 650px;
+}
+
+.center{
+    position: relative;
+    left: 50px;
+}
+
+.img-center
+{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.control-icon
+{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}

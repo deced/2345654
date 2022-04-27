@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>APOD</title>
+    <link href="styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Radio+Canada:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="m-3">
+    <div class="img-center">
+    <h1>Astronomy Picture of the Day</h1>
+    <label for="datesCheckbox">Date range</label>
+    <input type="checkbox" id="datesCheckbox" onchange="stateChanged()">
+
+    <input type="date" hidden id="startDate">
+    <input type="date" hidden id="endDate">
+    <input type="date" id="date">
+    <button class="btn btn-blue" onclick="getLinkToImage()">Search</button>
+    <div id="navigation" hidden>
+        <img src="prev.svg" class="control-icon" onclick="prevClick()">
+        <label id="count">12/32</label>
+        <img src="next.svg" class="control-icon" onclick="nextClick()">
+    </div>
+    </div>
+    <h1 class="text-center" id="title"></h1>
+    <h4 id="dateText" class="text-center"></h4>
+    <img id="image" class="m-2 img-center" >
+    <div class="center">
+    <iframe id="video"></iframe>
+    </div>
+    <p id="explanation"></p>
+</div>
+</body>
+</html>
+
+<script>
+
+    window.onload = getLinkToImage;
+    let APODS = [];
+    let currentIndex = 0;
+
+    function printInfo() {
+        let image = document.getElementById('image');
+        let title = document.getElementById('title');
+        let dateLabel = document.getElementById('dateText');
+        let explanation = document.getElementById('explanation');
+        let count = document.getElementById('count');
+        let video = document.getElementById('video');
+        explanation.textContent = APODS[currentIndex].explanation;
+        dateLabel.textContent = APODS[currentIndex].date;
+        title.textContent = APODS[currentIndex].title;
+        if (APODS[currentIndex].media_type == 'video') {
+            video.removeAttribute('hidden');
+            image.setAttribute('hidden','');
+            video.src = APODS[currentIndex].url;
+        } else {
+            video.setAttribute('hidden', '');
+            image.removeAttribute('hidden');
+            image.src = APODS[currentIndex].url;
+        }
+        count.textContent = `${currentIndex + 1}/${APODS.length}`
+    }
+
+    function prevClick() {
+        currentIndex--;
+        if (currentIndex < 0)
+            currentIndex = 0;
+        printInfo();
+    }
+
+    function nextClick() {
+        currentIndex++;
+        if (currentIndex > APODS.length)
+            currentIndex = APODS.length - 1;
+        printInfo();
+    }
+
+    function stateChanged() {
+        let checkbox = document.getElementById('datesCheckbox');
+        let date = document.getElementById('date');
+        let dateStart = document.getElementById('startDate');
+        let dateEnd = document.getElementById('endDate');
+        if (checkbox.checked) {
+            date.setAttribute('hidden', '');
+            dateStart.removeAttribute('hidden');
+            dateEnd.removeAttribute('hidden');
+        } else {
+            date.removeAttribute('hidden');
+            dateStart.setAttribute('hidden', '');
+            dateEnd.setAttribute('hidden', '');
+
+        }
+
+    }
+
+    function getLinkToImage() {
+        let checkbox = document.getElementById('datesCheckbox');
+        let date = document.getElementById('date');
+        let dateStart = document.getElementById('startDate');
+        let dateEnd = document.getElementById('endDate');
+        let image = document.getElementById('image');
+        let title = document.getElementById('title');
+        let dateLabel = document.getElementById('dateText');
+        let explanation = document.getElementById('explanation');
+        let navigation = document.getElementById('navigation');
+        let count = document.getElementById('count');
+        console.log(date.value);
+        let url = '';
+        if (!checkbox.checked)
+            url = `https://api.nasa.gov/planetary/apod?date=${date.value}&api_key=QLyvr3mHQ1XA8gZjcAEhxj5ZQzITzUrG2P26nPmW`;
+        else
+            url = `https://api.nasa.gov/planetary/apod?start_date=${dateStart.value}&end_date=${dateEnd.value}&api_key=QLyvr3mHQ1XA8gZjcAEhxj5ZQzITzUrG2P26nPmW`;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                if (checkbox.checked) {
+                    currentIndex = 0;
+                    APODS = data;
+                    data = APODS[0];
+                    navigation.removeAttribute('hidden');
+                    count.textContent = `1/${APODS.length}`
+                    console.log(APODS);
+                } else
+                    navigation.setAttribute('hidden', '');
+                explanation.textContent = data.explanation;
+                dateLabel.textContent = data.date;
+                title.textContent = data.title;
+                if (data.media_type == 'video') {
+                    video.removeAttribute('hidden');
+                    image.setAttribute('hidden','');
+                    video.src = data.url;
+                } else {
+                    video.setAttribute('hidden', '');
+                    image.removeAttribute('hidden');
+                    image.src = data.url;
+                }
+
+            });
+    }
+
+</script>
