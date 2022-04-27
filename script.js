@@ -98,6 +98,10 @@ function getLinkToImage() {
     fetch(url)
         .then(res => res.json())
         .then(data => {
+            if (data.code > 200) {
+                alert("Ошибка");
+                return;
+            }
             if (checkbox.checked) {
                 currentIndex = 0;
                 APODS = data;
