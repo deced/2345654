@@ -10,20 +10,25 @@
 </head>
 <body>
 <div class="m-3">
-    <div class="center">
-    <h1 >Astronomy Picture of the Day</h1>
-    <label for="datesCheckbox">Date range</label>
-    <input type="checkbox" id="datesCheckbox" onchange="stateChanged()">
+    <h1 class="text-center" >Astronomy Picture of the Day</h1>
 
-    <input type="date" hidden id="startDate"  onchange="stateChanged()">
-    <input type="date" hidden id="endDate"  onchange="stateChanged()">
-    <input type="date" id="date"  onchange="stateChanged()">
-    <button class="btn btn-blue" onclick="getLinkToImage()">Search</button>
-    <div id="navigation" hidden>
-        <img src="prev.svg" class="control-icon" onclick="prevClick()">
-        <label id="count">12/32</label>
-        <img src="next.svg" class="control-icon" onclick="nextClick()">
-    </div>
+    <div class="parent">
+        <div>
+        <label for="datesCheckbox">Date range</label>
+        <input type="checkbox" id="datesCheckbox" onchange="stateChanged()">
+        <input type="date" hidden id="startDate" onchange="stateChanged()">
+        <input type="date" hidden id="endDate" onchange="stateChanged()">
+        <input type="date" id="date" onchange="stateChanged()">
+        <button class="btn btn-blue" onclick="getLinkToImage()">Search</button>
+        <p></p>
+            <div class="parent">
+        <div id="navigation" hidden>
+            <img src="prev.svg" class="control-icon" onclick="prevClick()">
+            <label id="count"></label>
+            <img src="next.svg" class="control-icon" onclick="nextClick()">
+        </div>
+            </div>
+        </div>
     </div>
     <h1 class="text-center" id="title"></h1>
     <h4 id="dateText" class="text-center"></h4>

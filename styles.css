@@ -56,6 +56,13 @@ p{
     background: linear-gradient(#ffc222, orange) gold;
 }
 
+.parent
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 iframe{
     width: 1100px;
     height: 650px;
